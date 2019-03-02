@@ -736,7 +736,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 if (bitmap == null) {
                     LOG.d(LOG_TAG, "I either have a null image path or bitmap");
                     this.failPicture("Unable to create bitmap!");
-                    return;
+                    return "";
                 }
 
                 // If sending base64 image back
@@ -773,6 +773,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 System.gc();
             }
         }
+        return "";
     }
 
     /**
