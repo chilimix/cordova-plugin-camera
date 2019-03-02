@@ -683,7 +683,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         if (intent.getClipData() != null) {
             ArrayList<String> uris = new ArrayList<String>();
             for (int i = 0; i < intent.getClipData().getItemCount(); i++) {
-                uris.put(getFileUri(intent.getClipData().getItemAt(i).getUri()));
+                uris.add(getFileUri(intent.getClipData().getItemAt(i).getUri()));
             }
             JSONObject result = new JSONObject();
             result.put("files", uris);
