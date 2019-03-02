@@ -682,7 +682,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             JSONArray uris = new JSONArray();
             if (intent.getClipData() != null) {
                 for (int i = 0; i < intent.getClipData().getItemCount(); i++) {
-                    uris.put(getFileUri(intent.getClipData().getItemAt(i).getUri());
+                    uris.put(getFileUri(intent.getClipData().getItemAt(i).getUri()));
                 }
                 this.callbackContext.success(uris);
             } else {
