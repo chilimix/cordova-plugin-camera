@@ -703,7 +703,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         }
     }
 
-    private String getFileUri(Uri, uri, int destType, Intent intent) {
+    private String getFileUri(Uri uri, int destType, Intent intent) {
         int rotate = 0;
 
         String fileLocation = FileHelper.getRealPath(uri, this.cordova);
@@ -718,12 +718,12 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             return fileLocation;
         }
         else {
-
             // This is a special case to just return the path as no scaling,
             // rotating, nor compressing needs to be done
-            if (this.targetHeight == -1 && this.targetWidth == -1 &&
-                    (destType == FILE_URI || destType == NATIVE_URI) && !this.correctOrientation &&
-                    mimeType.equalsIgnoreCase(getMimetypeForFormat(encodingType)))
+            if (this.targetHeight == -1 
+                && this.targetWidth == -1 
+                && (destType == FILE_URI || destType == NATIVE_URI) && !this.correctOrientation 
+                && mimeType.equalsIgnoreCase(getMimetypeForFormat(encodingType)))
             {
                 return uriString;
             } else {
@@ -742,6 +742,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 // If sending base64 image back
                 if (destType == DATA_URL) {
                     this.processPicture(bitmap, this.encodingType);
+                    return "";
                 }
 
                 // If sending filename back
