@@ -59,6 +59,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * This class launches the camera view, allows the user to take a picture, closes the camera view,
@@ -678,28 +679,25 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
      * @param intent   An Intent, which can return result data to the caller (various data can be attached to Intent "extras").
      */
     private void processResultFromGallery(int destType, Intent intent) {
-        try {
-            JSONArray uris = new JSONArray();
-            if (intent.getClipData() != null) {
-                for (int i = 0; i < intent.getClipData().getItemCount(); i++) {
-                    uris.put(getFileUri(intent.getClipData().getItemAt(i).getUri()));
-                }
-                this.callbackContext.success(uris);
-            } else {
-                Uri uri = intent.getData();
-                if (uri == null) {
-                    if (croppedUri != null) {
-                        uri = croppedUri;
-                    } else {
-                        this.failPicture("null data from photo library");
-                        return;
-                    }
-                }
-                this.callbackContext.success(getFileUri(uri, destType, intent));
+        if (intent.getClipData() != null) {
+            ArrayList<String> uris = new ArrayList<String>();
+            for (int i = 0; i < intent.getClipData().getItemCount(); i++) {
+                uris.put(getFileUri(intent.getClipData().getItemAt(i).getUri()));
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
+            JSONObject result = new JSONObject();
+            result.put("files", uris);
+            this.callbackContext.success(result);
+        } else {
+            Uri uri = intent.getData();
+            if (uri == null) {
+                if (croppedUri != null) {
+                    uri = croppedUri;
+                } else {
+                    this.failPicture("null data from photo library");
+                    return;
+                }
+            }
+            this.callbackContext.success(getFileUri(uri, destType, intent));
         }
     }
 
